@@ -90,3 +90,157 @@ variable "enable_vpn_gateway" {
   description = "Should be true if you want to create a new VPN Gateway resource and attach it to the VPC"
 }
 
+variable "log_group_name" {
+  description = "The name of the CloudWatch log group"
+  type        = string
+  default     = "regtech-log-group"
+}
+
+variable "retention_days" {
+  description = "The number of days to retain the logs in the CloudWatch log group"
+  type        = number
+  default     = 15
+}
+
+# variables.tf
+
+variable "aws_region" {
+  description = "The AWS region to deploy resources in."
+  type        = string
+  default     = "us-west-2" # Replace with your desired region
+}
+
+variable "vpc_name" {
+  description = "The name of the VPC."
+  type        = string
+}
+
+variable "cidr" {
+  description = "The CIDR block for the VPC."
+  type        = string
+}
+
+variable "azs" {
+  description = "List of Availability Zones."
+  type        = list(string)
+}
+
+variable "private_subnets" {
+  description = "List of private subnet IDs."
+  type        = list(string)
+}
+
+variable "public_subnets" {
+  description = "List of public subnet IDs."
+  type        = list(string)
+}
+
+variable "enable_nat_gateway" {
+  description = "Enable NAT Gateway in the VPC."
+  type        = bool
+  default     = true
+}
+
+variable "enable_vpn_gateway" {
+  description = "Enable VPN Gateway in the VPC."
+  type        = bool
+  default     = false
+}
+
+variable "additional_tags" {
+  description = "Additional tags to apply to resources."
+  type        = map(string)
+  default     = {}
+}
+
+variable "cluster_name" {
+  description = "The name of the EKS cluster."
+  type        = string
+}
+
+variable "cluster_version" {
+  description = "The version of the EKS cluster."
+  type        = string
+  default     = "1.21"
+}
+
+variable "cluster_endpoint_public_access" {
+  description = "Enable public access to the EKS cluster endpoint."
+  type        = bool
+  default     = true
+}
+
+variable "cluster_endpoint_private_access" {
+  description = "Enable private access to the EKS cluster endpoint."
+  type        = bool
+  default     = false
+}
+
+variable "cluster_addons" {
+  description = "List of EKS addons to install."
+  type        = list(string)
+  default     = []
+}
+
+variable "create_aws_auth_configmap" {
+  description = "Create the aws-auth ConfigMap."
+  type        = bool
+  default     = true
+}
+
+variable "manage_aws_auth_configmap" {
+  description = "Manage the aws-auth ConfigMap."
+  type        = bool
+  default     = true
+}
+
+variable "node_group_desired_size" {
+  description = "Desired size of the EKS node group."
+  type        = number
+  default     = 2
+}
+
+variable "node_group_max_size" {
+  description = "Maximum size of the EKS node group."
+  type        = number
+  default     = 3
+}
+
+variable "node_group_min_size" {
+  description = "Minimum size of the EKS node group."
+  type        = number
+  default     = 1
+}
+
+variable "instance_types" {
+  description = "EC2 instance types for the EKS node group."
+  type        = list(string)
+  default     = ["m5.large"]
+}
+
+variable "config_bucket_name" {
+  description = "The name of the S3 bucket where AWS Config delivers configuration snapshots and compliance reports."
+  type        = string
+  default     = "my-terraform-config-bucket" # Replace with your bucket name
+}
+
+variable "config_role_name" {
+  description = "The name of the IAM role for AWS Config."
+  type        = string
+  default     = "AWSConfigRole"
+}
+
+variable "additional_config_rules" {
+  description = "A map of additional AWS Config rules to be created."
+  type = map(object({
+    name                     = string
+    source_identifier        = string
+    maximum_execution_frequency = string
+  }))
+  default = {}
+}
+
+variable "config_bucket_name" {
+  description = "The name of the S3 bucket for AWS Config logs"
+  type        = string
+}

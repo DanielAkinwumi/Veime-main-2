@@ -43,11 +43,13 @@ jobs:
       - name: Deploy Kubernetes Namespaces and Deployments
         run: |
           # Apply combined namespace file
-          kubectl apply -f modules/kubernetes/namespaces.yaml
+          kubectl apply -f modules/deployment/namespaces.yaml
 
           # Apply combined deployments file
-          kubectl apply -f modules/kubernetes/deployments.yaml
+          kubectl apply -f modules/deployment/deployments.yaml
 
           # Check deployment status for both environments
           kubectl rollout status deployment/nginx-deployment -n staging
           kubectl rollout status deployment/nginx-deployment -n dev
+          kubectl rollout status deployment/nginx-deployment -n prod
+          
